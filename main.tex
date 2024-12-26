@@ -1,0 +1,312 @@
+% Copyright 2024 the authors. All rights reserved.
+
+% to-do items
+% -----------
+% - consider a notation in which 4-vectors get arrows and 3-vectors are bold.
+% - look at and fix all CITE HOGG SOLE.
+
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[letterpaper]{geometry}
+\usepackage{amsmath,amsfonts,amsthm}
+
+% typesetting and layout
+\setlength{\textwidth}{5.00in}
+\setlength{\oddsidemargin}{0.5\paperwidth} % math
+\addtolength{\oddsidemargin}{-1.00in} % math (and LaTeX convention)
+\addtolength{\oddsidemargin}{-0.5\textwidth} % math
+\setlength{\headsep}{0.25in}
+\setlength{\topmargin}{0.00in}
+\addtolength{\topmargin}{-\headsep}
+\addtolength{\topmargin}{-\headheight}
+\setlength{\textheight}{9.00in} % math (and LaTeX convention)
+\pagestyle{myheadings}
+\markboth{foo}{Hogg \& Villar / Special relativity for mathematicians}
+\renewcommand{\baselinestretch}{1.08}
+\frenchspacing
+\newcommand{\documentname}{\textsl{Note}}
+\newcounter{par}
+\renewcommand{\paragraph}[1]{\addvspace{2.5ex}\par\refstepcounter{par}\noindent{\textbf{\thepar.~{#1}}~---}}
+\renewenvironment{abstract}{\noindent{\textbf{Abstract:}}}{}
+
+% definitions and comments
+\theoremstyle{remark}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem*{remark}{Comment}
+
+% math definitions
+\newcommand\upvec[1]{\!\vec{\,\mathrm{#1}}}
+\newcommand{\tv}[1]{{\mathbf{#1}}} % three-vector
+\newcommand{\fv}[1]{\upvec{\mathsf{#1}}} % four-vector
+\newcommand{\abs}[1]{\left|{#1}\right|}
+\newcommand{\inner}[2]{\left<{#1}\,,\,{#2}\right>}
+\newcommand{\unit}[1]{\mathrm{#1}}
+\newcommand{\m}{\unit{m}}
+\newcommand{\s}{\unit{s}}
+
+\title{\bfseries Special relativity for mathematicians}
+\author{David W. Hogg \& Soledad Villar}
+\date{December 2024}
+
+\begin{document}
+
+\maketitle\thispagestyle{empty}
+
+\begin{abstract}
+We attempt to deliver the most compact possible explanation of special relativity, aimed at a reader who is mathematically sophisticated.
+The point is: The theory is very simple when written in terms of the invariants of the Lorentz group.
+\end{abstract}
+
+\paragraph{Your non-relativistic life}
+If you have never traveled, relative to anyone you know, at an appreciable fraction of the speed of light $c$, you might believe certain wrong things about the world.
+You might believe that you and your colleagues all age at the same rate, no matter your differing paths through the world.
+You might believe that if you travel a (vector) displacement $d$ at (vector) velocity $v$ it takes you a time $\abs{d}/\abs{v}$.
+You might believe that the momentum of a particle of mass $m$ moving at velocity $v$ is $m\,v$ and the kinetic energy of that particle is $m\abs{v}^2/2$.
+You might believe that it is possible to know whether a ball is kicked prior to---or after---the time the receiving player crosses a certain line on the football\footnote{In this context, ``football'' is the game sometimes known as ``soccer''.} pitch (that is, you might believe that the offsides rule in football is physically possible to judge by a moving referee).
+You might even feel like you have pretty good reasons to believe all of these things.
+
+It's about to turn out that every one of these things is wrong!
+Well that's a bit strong: Every one of these things is modified as relative speeds (relative velocity magnitudes) approach the speed of light $c$.
+That is, the things you believe about the world are properties of a low-speed limit of a more fundamental theory of space and time, or \emph{spacetime}.
+This theory is called special relativity (CITE).
+
+\paragraph{Ontology}
+In special relativity, there are events, scalars, four-vectors, and four-tensors.
+There is additionally a concept of a reference frame, and a relative velocity between frames.
+
+\begin{definition}[speed of light]
+    The speed of light in vacuum $c$ is $299\,792\,458\,\m\,\s^{-1}$.
+    In the units in which time and distance are both measured in meters, the speed of light in vacuum $c$ is 1.
+\end{definition}
+\begin{remark}
+    For reasons that will become clear below, the parameter $c$ should really be called ``the null speed'' not ``the speed of light,'' but we are sticking with standard usage here.
+    The null speed is a conversion factor, not really the ``speed'' of anything:
+    For special relativity to be simple, positions and times ought to be expressed \emph{in the same units}.
+    The speed of light in vacuum $c$ (hereafter just ``the speed of light'') is the conversion factor that converts times to lengths or lengths to times, such that $299\,792\,458\,\m = 1\,\s$.
+    The speed of light is no longer a measured quantity in physics.
+    It is \emph{defined} to perform this conversion, and the meter is now defined in terms of the second (which, in turn, is defined by a certain transition frequency in the electronic structure of the cesium atom).\footnote{%
+        It is perhaps worth commenting here that the speed of light $c$ can be defined rather than measured because, in the current understanding of physics, it is a \emph{parameter of spacetime}.
+        Of course it is possible to measure the speed of light!
+        But in current thinking, the empirical question at hand when an experimentalist measures the speed of light is not ``What is $c$?'' but instead ``Does light in a vacuum travel at $c$?''}
+\end{remark}
+
+\begin{definition}[event]
+    An event in $d+1$ is an object that has a time and a location in $d$-dimensional space.
+\end{definition}
+\begin{remark}
+    For example, if you sneeze, you do so at a particular time $t$, and at a particular position, which in $d=3$ dimensions has three coordinates $(x, y, z)$.
+    In different reference frames (defined below), this sneeze will happen in general at different locations, but also at different times (as we will see), but all observers will agree that the sneeze did occur, no matter what their chosen reference frame.
+\end{remark}
+
+\begin{definition}[spacetime]
+    Spacetime is the $d+1$-dimensional space or manifold of all possible events.
+\end{definition}
+
+\begin{definition}[four-vector]
+    A four-vector is an element of $\mathbb{R}^{d+1}$ that contains a time coordinate followed by $d$ spatial coordinates.
+    All four elements of the four-vector must have the same units.
+\end{definition}
+\begin{remark}
+    We will think of the four-vectors as being column vectors in what follows, so maybe they are really elements of $\mathbb{R}^{(d+1)\times 1}$.
+    We will typeset four-vectors sans-serif with hats like $\fv{u}$, $\fv{p}$.
+\end{remark}
+
+\begin{definition}[four-displacement]
+    The simplest four-vector is the \emph{four-displacement}, which is the separation between two events in $d+1$ spacetime, with all $d+1$ coordinates given in the same units.
+\end{definition}
+\begin{remark}
+    The four-displacement has $d+1$ elements or coordinates because each event has a time coordinate and $d$ position coordinates.
+    The coordinates can be given in either time units (seconds, say) or length units (meters, say), using the speed of light $c$ as the conversion factor between length and time.
+\end{remark}
+
+\begin{definition}[three-vector]
+    A three-vector is an element of $\mathbb{R}^{d}$ that contains $d$ spatial coordinates, with all $d$ coordinates given in the same units.
+\end{definition}
+\begin{remark}
+    The simplest three-vector is the displacement, which is the separation between two positions in space.
+    We will typeset three-vectors bold like $\tv{v}$, $\tv{p}$.
+\end{remark}
+
+Below here be dragons (see the latex source).
+\end{document}
+
+\begin{definition}[reference frame]
+    A reference frame is a coordinate system, moving at a constant velocity, in which events and other four-vectors can be represented.
+\end{definition}
+\begin{remark}
+Two different reference frames will, in general, be moving with respect to each other, such that objects that are at rest in one reference frame will be moving in another reference frame.
+The \emph{principle of relativity} is that there is no preferred reference frame; all are legitimate, and the laws of physics are the same in all of them.
+The ``special'' in special relativity is that there exists a concept of constant velocity; reference frames move at constant velocity with respect to each other, and reference frames have vanishing acceleration.
+\end{remark}
+
+\begin{definition}[relative velocity]
+    Between any two reference frames there is a relative three-vector velocity, which is the coordinate derivative of the three-vector position with respect to time.
+\end{definition}
+
+\begin{definition}[boost]
+    A transformation (of a set of four-vectors, say) between one reference frame and another that has a non-zero velocity relative to the first is a boost transformation.
+\end{definition}
+
+\begin{definition}[scalar]
+    A scalar is a quantity that is the same in all reference frames.
+\end{definition}
+\begin{remark}
+For example, if you sneezed $q$ times while you walked from 3rd St to 21st St, all observers in all frames will agree on this fact, so the ``sneeze number'' $q$ is a scalar.
+Other examples of scalars include 
+the rest mass of the electron,
+the binding energy of the nucleus of magnesium,
+and the number of continents on Earth.
+
+Scalars can change over time (the Earth's crust evolves), so technically it is best to think of each scalar as being a property of an event:
+When I sneezed on my walk uptown, the number of continents on Earth was seven.
+That is a good specification of a scalar quantity.
+It is best to think of all the objects (scalars, four-vectors, and four-tensors) as being defined at events (local points) in spacetime, because physical theories are generally field theories, in which the important interactions are local in spacetime.
+\end{remark}
+
+\begin{definition}[four-tensor]
+    A four-tensor is a sum of outer products of four-vectors.
+\end{definition}
+\begin{remark}
+Four-tensors are out of scope for our present purposes.
+\end{remark}
+
+\paragraph{Lorentz symmetry}
+The fundamental symmetry of spacetime is local Lorentz symmetry.\footnote{This symmetry is called ``Lorentz'' and not ``Einstein'' because Poincar\'e named it (CITE) and Poincar\'e did not like Einstein (CITE).}
+In the case of special relativity (the special case), there is no gravity, no spacetime curvature, no non-trivial geometry, and the Lorentz symmetry is both local and global.
+The most important aspect of Lorentz symmetry is the definition of the inner product or scalar product between two four-vectors.
+
+\begin{definition}[inner product]
+    The inner product $\inner{a}{b}$ between two four vectors is $a^\top\,\Lambda\,b$, where
+    \begin{align}\label{eq:sig}
+    \Lambda &= \begin{bmatrix}+1 & 0 & 0 & 0\\
+                               0 & -1 & 0 & 0\\
+                               0 & 0 & -1 & 0\\
+                               0 & 0 & 0 & -1\end{bmatrix} ~.
+    \end{align}
+    That is, the inner product is the product of the time coordinates of the four-vectors minus the sum of the products of the space coordinates.
+\end{definition}
+\begin{remark}
+The inner product of two four-vectors is a scalar.
+That is, the inner product is invariant to changes of reference frame.
+\end{remark}
+
+The matrix $\Lambda$ looks like a metric tensor---and it is what physicists call ``the metric''---but it has the weird property that the inner product of a four-vector with itself $\inner{a}{a}$ can be positive, negative, or zero.
+This will lead to an important classification of four-vectors, and be related to causality, below.
+Related to this, there is a ``signature'' choice, in the sense that the diagonal of $\Lambda$ can be $(+1,-1,-1,-1)$ or it can be $(-1,+1,+1,+1)$.
+In what follows, we will stick with the choice made in \eqref{eq:sig}.
+
+It is off-topic to note that if you insist on measuring time differences in time units (such as seconds), and spatial separations in length units (such as meters), then the diagonal of $\Lambda$ becomes $(+c^2,-1,-1,-1)$.
+When you use the same units for times and lengths, $c=1$ and the diagional of $\Lambda$ is $(+1,-1,-1,-1)$
+
+\paragraph{The interval and time dilation}
+Imagine you have two events, A and B, separated in both time and space, with event A happening before event B.
+
+\begin{definition}[interval]
+    Between any two events there is a four-vector displacement $s$.
+    The interval between the two events is defined to be the inner product of this displacement $s$ with itself $\inner{s}{s}$.
+\end{definition}
+\begin{remark}
+The interval is positive if the squared time difference is larger than the sum of the squares of the spatial differences.
+This condition is met if an object moving at constant velocity from event A to event B would be moving at less than the speed of light (which is 1 if the units for times and distances are all the same).
+In this case, we say that the two events are \emph{timelike separated}
+The interval is zero if an object moving at constant velocity from event A to event B would be moving exactly at the speed of light.
+The interval is negative if an object could only get from A to B by moving faster than light.\footnote{These signs of the interval are reversed if the signature of the metric $\Lambda$ is reversed.}
+In this case we say that the two events are \emph{spacelike separated}.
+
+Another way to say this is: If the two events are timelike separated, then there exists a reference frame in which the two events happened at the same spatial position.
+\end{remark}
+
+\begin{definition}[rest frame]
+    For any two events that are timelike separated (for which the interval is positive), the corresponding rest frame is the reference frame at which they happened at the same position.
+\end{definition}
+
+Imagine that we have two timelike separated events A, and B.
+Event A happened before event B, and the two events happened at different spatial positions in some reference frame, which we will call ``the Lab Frame''.
+Consider now the boost from the Lab Frame to the rest frame of the event pair.
+In the rest frame, the spatial separation of the two events is zero.
+The interval is a scalar, which means it must be the same in all reference frames.
+The interval in the rest frame is just the square of the time difference between the two events, whereas
+in the Lab frame, the interval is less than the square of the time difference.
+Thus \emph{the time difference between the events depends on the reference frame}.
+
+This effect is known as \emph{time dilation}.
+The time interval between two events is shortest in the rest frame.
+The rest frame is the reference frame of maximum absolute time difference.
+This effect will lead to one of the classical paradoxes, known as ``the twin paradox''.
+
+\paragraph{Classical paradox: The twin paradox}
+Imagine you have three events, A (departure), B (turnaround), and C (homecoming), such that event A happens first, event B happens second, and event C happens third.
+Set up all three events such that all intervals between them are timelike.
+Make sure that the rest frame of A and B is not the same as the rest frame of A and C.
+
+Now consider two twins, one a homebody, and one an adventurer.
+The homebody passes through events A and C, and lives at rest always in the rest frame of events A and C.
+The adventurer passes through all three events, A, B, and C.
+The adventurer lives at first in the rest in the rest frame of events A and B, and then, at event B, switches to the rest frame of events B and C.
+That is, the adventurer departs the homebody at A (departure), changes velocity at B (turnaround), and returns to the homebody at C (homecoming).
+These two twins will have aged different amounts between events A (departure) and C (homecoming).
+
+If you really want to get specific, think of the ticks of the watch of the homebody and the ticks of the watch of the adventurer.
+Provided that the relative velocities between the adventurer and the homebody are large enough in magnitude, the adventurer's watch will tick fewer times than the homebody's watch between events A and C.
+
+This is like \emph{the opposite of the triangle inequality}.
+HOGG explain how.
+
+\paragraph{Particle lifetimes and ranges}
+Imagine an unstable particle that lives, in its own rest frame, for a time $T$ and then decays.
+How far can this particle travel from creation to decay if it moves at three-velocity $v$?
+The naive answer would be a three-displacement $d = v\,T$.
+In fact it can travel far further.
+HOGG: EXPLAIN.
+
+\paragraph{The speed of light is the same in all frames}
+Consider two events, A and B, that have an exactly zero interval between them.
+If they have this interval, then the spatial 3-dispacement between the events has a magnitude that is equal to the magnitude of the time difference between the events.
+When a spatial distance equals a time difference, then the two events are connected by a trajectory that is moving at the speed of light $c=1$.
+Since the interval between the events is the same in all frames, the speed of light is the same in all frames.
+
+\paragraph{Simultaneity}
+Consider three events, A, B, and C.
+Events A and B happen, in the AB rest frame, at the same location; the interval between A and B is timelike.
+Events B and C happen, in the AB rest frame, at the same time; the interval between B and C is spacelike.
+The interval between B and C is the negative of the interval between A and B; that is, the interval between A and C is null.
+Now boost.
+In any other reference frame, moving with respect to the AB rest frame, events A and B will not have the same position (see above XXXX).
+Thus in any other reference frame, moving with respect to the AB rest frame, events B and C will not be simultaneous.
+Simultaneity is not a frame-independent property of a pair of events.
+
+\paragraph{Classical paradox: The ladder in the barn}
+
+\paragraph{Causality}
+
+\paragraph{Four-velocity}
+Given these definitions and considerations, what is the analogous four-vector to the three-vector velocity that we are used to?
+If the four-velocity is a four-vector, it must have a magnitude that is the same in all reference frames, while the three-velocities in different frames are different.
+
+HOGG SAY: DO WE NEED A CONCEPT OF A WORLD LINE?
+
+\paragraph{Lorentz transformation}
+Much of normal physics writing about special relativity focuses very much on the Lorentz transformation.
+That will be different in this \documentname.
+
+A Lorentz transformation is a linear operator $Q$ that takes as input a four-vector $v$ and returns as output a new four-vector $w = Q\,v$, such that $\inner{w}{w} = \inner{Q\,v}{Q\,v} = \inner{v}{v}$.
+
+These transformations include rotations, reflections, and \emph{boosts}.\footnote{It is slightly controversial to say that the Lorentz transformations include reflections, because some laws of physics involve pseudo-objects that depend on the parity of the coordinate system. But with our simple definition, the reflections are in.}
+A boost is a transformation such that the two reference frames have different rest velocities, or such that objects that are at rest in one frame will be moving in the other frame.
+
+\paragraph{Energies and momenta}
+
+\paragraph{Parting comments}
+
+\paragraph{Acknowledgements}
+It is a pleasure to thank
+  Roger Blandford (Stanford) and
+  Dan Packer (OSU)
+for valuable discussions, and
+  HOGG, SOLE
+for comments on this manuscript.
+SOLE GRANTS HERE.
+The Flatiron Institute is a division of the Simons Foundation.
+
+\end{document}

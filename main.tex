@@ -32,10 +32,12 @@
 % definitions and comments
 \theoremstyle{remark}
 \newtheorem{definition}{Definition}
+\newcommand{\defref}[1]{Definition~\ref{#1}}
 \theoremstyle{remark}
 \newtheorem*{remark}{Comment}
 
 % math definitions
+\newcommand{\metric}{\mathsf{H}}
 \newcommand\upvec[1]{\!\vec{\,\mathrm{#1}}}
 \newcommand{\tv}[1]{{\mathbf{#1}}} % three-vector
 \newcommand{\fv}[1]{\upvec{\mathsf{#1}}} % four-vector
@@ -88,7 +90,8 @@ There is additionally a concept of a reference frame, and a relative velocity be
     It is \emph{defined} to perform this conversion, and the meter is now defined in terms of the second (which, in turn, is defined by a certain transition frequency in the electronic structure of the cesium atom).\footnote{%
         It is perhaps worth commenting here that the speed of light $c$ can be defined rather than measured because, in the current understanding of physics, it is a \emph{parameter of spacetime}.
         Of course it is possible to measure the speed of light!
-        But in current thinking, the empirical question at hand when an experimentalist measures the speed of light is not ``What is $c$?'' but instead ``Does light in a vacuum travel at $c$?''}
+        But in current thinking, the empirical question at hand when an experimentalist measures the speed of light of wavelength (say) $\lambda$ is not ``What is $c$?'' but instead ``Does light of wavelength $\lambda$ travel at $c$?''
+        The answer appears to be yes, to very high precision (CITE SOMETHING), but the argument is at least somewhat circular.}
 \end{remark}
 
 \begin{definition}[event]
@@ -103,19 +106,14 @@ There is additionally a concept of a reference frame, and a relative velocity be
     Spacetime is the ($d+1$)-dimensional space or manifold of all possible events.
 \end{definition}
 
-\begin{definition}[four-vector]
+\begin{definition}[four-vector]\label{def:fv}
     A four-vector is an element of $\mathbb{R}^{d+1}$ that contains a time coordinate followed by $d$ spatial coordinates.
     All four elements of the four-vector must have the same units.
 \end{definition}
 \begin{remark}
     We will think of the four-vectors as being column vectors in what follows, so maybe they are really elements of $\mathbb{R}^{(d+1)\times 1}$.
     We will typeset four-vectors sans-serif with hats like $\fv{u}$, $\fv{p}$.
-\end{remark}
-
-\begin{definition}[four-displacement]
     The simplest four-vector is the \emph{four-displacement}, which is the separation between two events in $d+1$ spacetime, with all $d+1$ coordinates given in the same units.
-\end{definition}
-\begin{remark}
     The four-displacement has $d+1$ elements or coordinates because each event has a time coordinate and $d$ position coordinates.
     The coordinates can be given in either time units (seconds, say) or length units (meters, say), using the speed of light $c$ as the conversion factor between length and time.
 \end{remark}
@@ -126,7 +124,33 @@ There is additionally a concept of a reference frame, and a relative velocity be
 \begin{remark}
     The simplest three-vector is the displacement, which is the separation between two positions in space.
     We will typeset three-vectors bold like $\tv{v}$, $\tv{p}$.
-    HOGG: DO we need to note that you can write a four-vector as a time coordinate followed by a three-vector?
+    Every four-vector can be written as an ordered list of one time component followed by the $d$ components of a three-vector.
+    Thus the four-vector $\fv{p}$ can be written as $(p_t, \tv{p})$, where the first element is the time component of $\fv{p}$ and the next $d$ components of $\fv{p}$ are given by the $d$ components of $\tv{p}$.
+\end{remark}
+
+\begin{definition}[inner products]
+    Given two three-vectors $\tv{a}$ and $\tv{b}$, the inner product $\inner{\tv{a}}{\tv{b}}=\tv{a}\cdot\tv{b}$ is the usual Euclidean inner product.
+    Given two four-vectors $\fv{a}=(a_t,\tv{a})$ and $\fv{b}=(b_t,\tv{b})$, the inner product is given by a difference
+    \begin{align}
+        \inner{\fv{a}}{\fv{b}} &= a_t\,b_t - \tv{a}\cdot\tv{b} ~.
+    \end{align}
+\end{definition}
+\begin{remark}
+    The inner product is not positive definite.
+    Thus the inner product $\inner{\fv{a}}{\fv{a}}$ cannot trivially be thought of as the square of the ``magnitude'' or ``length'' of the four-vector $\fv{a}$.
+    Or if you do want to think of it that way, you will lose the comfort of the triangle inequality.
+    This non-positive-definiteness will lead to the twin paradox, below, among other things.
+    The inner product can be seen in terms of a metric tensor $\metric$; if we think of the four-vectors as being column vectors, then the inner product can be written as
+    \begin{align}
+        \inner{\fv{a}}{\fv{b}} &= \fv{a}^\top\,\metric\,\fv{b} \\
+        \metric &= \begin{bmatrix}1 &  0 &  0 &  0\\
+                                  0 & -1 &  0 &  0\\
+                                  0 &  0 & -1 &  0\\
+                                  0 &  0 &  0 & -1\end{bmatrix} ~.
+    \end{align}
+    Note that the inner product $\inner{\fv{a}}{\fv{a}}$ only works if all $d+1$ components of the four-vector have the same units, which was required in \defref{def:fv}.
+    The inner products of four-vectors will turn out to be scalars, when we define these below.
+    Finally, we comment that we have made a particular---and arbitrary---``signature'' choice, which is whether to make the first element of the metric positive and the rest negative, or the other way around.\footnote{The signature choice will only appear in the interpretation or management of the \emph{signs} of the inner products, which appear when we consider causality, or take square roots.}
 \end{remark}
 
 \begin{definition}[world line]
@@ -145,10 +169,6 @@ There is additionally a concept of a reference frame, and a relative velocity be
     foo and bar
 \end{definition}
 
-\begin{definition}[inner product]
-    foo and bar
-\end{definition}
-
 \paragraph{Time dilation and length contraction}
 
 HOGG: Argue that elapsed time must be the (square root of) the interval.
@@ -162,6 +182,8 @@ HOGG: Prove that the constant-velocity trajectory worldline is the maximum-prope
 HOGG: Note that this delivers a twin paradox.
 
 HOGG: Deliver the Lorentz transformation?
+
+\paragraph{Causality}
 
 \paragraph{Energy and momentum}
 
@@ -220,29 +242,6 @@ Four-tensors are out of scope for our present purposes.
 The fundamental symmetry of spacetime is local Lorentz symmetry.\footnote{This symmetry is called ``Lorentz'' and not ``Einstein'' because Poincar\'e named it (CITE) and Poincar\'e did not like Einstein (CITE).}
 In the case of special relativity (the special case), there is no gravity, no spacetime curvature, no non-trivial geometry, and the Lorentz symmetry is both local and global.
 The most important aspect of Lorentz symmetry is the definition of the inner product or scalar product between two four-vectors.
-
-\begin{definition}[inner product]
-    The inner product $\inner{a}{b}$ between two four vectors is $a^\top\,\Lambda\,b$, where
-    \begin{align}\label{eq:sig}
-    \Lambda &= \begin{bmatrix}+1 & 0 & 0 & 0\\
-                               0 & -1 & 0 & 0\\
-                               0 & 0 & -1 & 0\\
-                               0 & 0 & 0 & -1\end{bmatrix} ~.
-    \end{align}
-    That is, the inner product is the product of the time coordinates of the four-vectors minus the sum of the products of the space coordinates.
-\end{definition}
-\begin{remark}
-The inner product of two four-vectors is a scalar.
-That is, the inner product is invariant to changes of reference frame.
-\end{remark}
-
-The matrix $\Lambda$ looks like a metric tensor---and it is what physicists call ``the metric''---but it has the weird property that the inner product of a four-vector with itself $\inner{a}{a}$ can be positive, negative, or zero.
-This will lead to an important classification of four-vectors, and be related to causality, below.
-Related to this, there is a ``signature'' choice, in the sense that the diagonal of $\Lambda$ can be $(+1,-1,-1,-1)$ or it can be $(-1,+1,+1,+1)$.
-In what follows, we will stick with the choice made in \eqref{eq:sig}.
-
-It is off-topic to note that if you insist on measuring time differences in time units (such as seconds), and spatial separations in length units (such as meters), then the diagonal of $\Lambda$ becomes $(+c^2,-1,-1,-1)$.
-When you use the same units for times and lengths, $c=1$ and the diagional of $\Lambda$ is $(+1,-1,-1,-1)$
 
 \paragraph{The interval and time dilation}
 Imagine you have two events, A and B, separated in both time and space, with event A happening before event B.

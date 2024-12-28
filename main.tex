@@ -2,8 +2,14 @@
 
 % to-do items
 % -----------
-% - consider a notation in which 4-vectors get arrows and 3-vectors are bold.
 % - look at and fix all CITE HOGG SOLE.
+
+% style notes
+% -----------
+% - Is the word "inertial" the correct word to describe the coordinate system?
+% - Be careful between "coordinate system" and "frame". They different.
+% - Should we italicize terms the first time we use them? Probably!
+% - They are always "three-vectors" and "four-vectors" even when $d\ne 3$.
 
 \documentclass[10pt]{article}
 \usepackage[utf8]{inputenc}
@@ -23,11 +29,14 @@
 \pagestyle{myheadings}
 \markboth{foo}{Hogg \& Villar / Special relativity for mathematicians}
 \renewcommand{\baselinestretch}{1.08}
-\frenchspacing
+\frenchspacing\sloppy\sloppypar\raggedbottom
+
+% mess with sections and environments
 \newcommand{\documentname}{\textsl{Note}}
 \newcounter{par}
 \renewcommand{\paragraph}[1]{\addvspace{2.5ex}\par\refstepcounter{par}\noindent{\textbf{\thepar.~{#1}}~---}}
-\renewenvironment{abstract}{\noindent{\textbf{Abstract:}}}{}
+\renewenvironment{abstract}{\noindent{\textbf{Abstract}~---}}{}
+\newcommand{\secref}[1]{Section~\ref{#1}}
 
 % definitions and comments
 \theoremstyle{remark}
@@ -56,8 +65,8 @@
 \maketitle\thispagestyle{empty}
 
 \begin{abstract}
-We attempt to deliver the most compact possible explanation of special relativity, aimed at a reader who is mathematically sophisticated.
-The point is: The theory is very simple when written in terms of the invariants of the Lorentz group.
+We attempt to deliver the most compact possible explanation of special relativity, aimed at a mathematically sophisticated reader.
+The theory is very simple when written in terms of the invariants of the Lorentz group.
 \end{abstract}
 
 \paragraph{Your non-relativistic life}
@@ -153,23 +162,74 @@ There is additionally a concept of a reference frame, and a relative velocity be
     Finally, we comment that we have made a particular---and arbitrary---``signature'' choice, which is whether to make the first element of the metric positive and the rest negative, or the other way around.\footnote{The signature choice will only appear in the interpretation or management of the \emph{signs} of the inner products, which appear when we consider causality, or take square roots.}
 \end{remark}
 
-\begin{definition}[world line]
-    foo and bar
+\begin{definition}[worldline]
+    Any point particle that exists for a finite time passes through a set of contiguous events.
+    The one-dimensional set or manifold of these events makes up the particle's worldline.
 \end{definition}
+\begin{remark}
+    The worldline is just another name for the particle's trajectory, used when the particle is thought of as existing in spacetime.
+\end{remark}
 
-\begin{definition}[constant velocity]
-    foo and bar
+\begin{definition}[inertial coordinate system]\label{def:coordinates}
+    An inertial coordinate system is one in which all the worldlines of all the non-accelerated or constant-velocity particles are straight lines.
 \end{definition}
+\begin{remark}
+    The inertial coordinate system is an idealization or approximation.
+    In the real universe, in which there are gravitational fields everywhere, there is no precisely inertial coordinate system with finite extent.
+    That said, there are (with obscure exceptions) always many locally inertial coordinate systems available, in the sense that they become closer to inertial as they extend over a smaller and smaller four-volume of spacetime.
+    Investigation of that is beyond the scope here; it is part of general relativity (CITE), the generalization of special relativity to include gravitation.
+    This \defref{def:coordinates} is also circular, in that it both defines an inertial coordinate system \emph{and} a non-accelerated particle.
+    In practice there are other ways to define a non-accelerated particle using local measurements on the particle's worldline, so this can be made non-circular under an expansion of scope. 
+\end{remark}
 
-\begin{definition}[reference frame]
-    foo and bar
+\begin{definition}[rest frame]
+    If in some inertial coordinate system, a particle worldline is aligned with the time direction; that is, it has no spatial extent in spacetime, then this coordinate system describes that particle's rest frame.
 \end{definition}
+\begin{remark}
+    Two different inertial coordinate systems can describe the same rest frame, because there are origin four-displacements and spatial rotations and reflections available in the choice of coordinate system.
+    But, in general, two different coordinate systems will not describe the same rest frame, because the coordinate system involves deciding what constitutes the state of rest, or which particles (or really worldline segments) are at zero velocity.
+    This difference between two coordinate systems in the meaning of the state of rest is referred to as a boost.
+\end{remark}
+
+\begin{definition}[Lorentz transformation]\label{def:lt}
+    The transformations that take four-vector components in one inertial coordinate system to those in another are the Lorentz transformations.
+    The Lorentz transformations comprise all linear transformations that leave all inner products $\inner{\fv{a}}{\fv{b}}$ invariant, for all four-vectors $\fv{a}$ and $\fv{b}$.
+\end{definition}
+\begin{remark}
+    Two coordinate systems can differ in the position of their origin (a four-vector displacement), rotation of the $d$ spatial coordinate directions, various reflections, and a change in ``zero velocity'' or the rest frame.
+    The latter difference is the boost.
+    Since four-vectors are usually translation-invariant (the simplest four-vector is the four-displacement between two events), the Lorentz transformations account for the rotations, reflections, and boosts.
+    In $d=1$ or $1+1$ spacetime, there are only reflections and boosts available, and all of the Lorentz transformations can be written in the form
+    \begin{align}
+    \fv{u}' &= \Lambda\,\fv{u} \\
+    \Lambda &= \begin{bmatrix}\gamma & \beta\,\gamma \\ \beta\,\gamma & \gamma\end{bmatrix} ~\mbox{or}~
+    \begin{bmatrix}-\gamma & -\beta\,\gamma \\ \beta\,\gamma & \gamma\end{bmatrix} ~\mbox{or}~
+    \begin{bmatrix}\gamma & \beta\,\gamma \\ -\beta\,\gamma & -\gamma\end{bmatrix}  ~\mbox{or}~
+    \begin{bmatrix}-\gamma & -\beta\,\gamma \\ -\beta\,\gamma & -\gamma\end{bmatrix} \label{eq:o11}
+    \\
+    \gamma &\equiv \frac{1}{\sqrt{1 - \beta^2}} ~ \mbox{and} ~ -1 < \beta < 1 ~,\nonumber
+    \end{align}
+    where $\Lambda\in\mathbb{R}^{2\times 2}$ is a matrix representation of the Lorentz transformation, $\fv{u}\in\mathbb{R}^{2\times 1}$ contains the components of the ($1+1$)-dimensional four-vector in one frame, and $\fv{u}'$ contains the components of the four-vector in the new frame.
+    In this expression, $\gamma$ is called the Lorentz factor and $\beta$ is called the dimensionless velocity.
+    The restriction $-1 < \beta < 1$ (nothing can travel faster than light) relates to causal structure, discussed below in \secref{sec:causality}.
+    The first of the four forms given for $\Lambda$ is the one in which there are no spatial or time reflections; it is sufficient for most cases we care about.
+    In $d>1$ spatial dimensions, the Lorentz transformation becomes very complicated to state generally (CITE THINGS, including us).
+\end{remark}
 
 \begin{definition}[scalar]
-    foo and bar
+    A scalar is a quantity (possibly with units) that is the same in all inertial coordinate systems.
 \end{definition}
+\begin{remark}
+    A scalar is anything that is truly coordinate free, or which can be agreed upon by all observers, no matter their rest frame or choice of coordinate system.
+    For example, the properties of the electron (charge, rest mass, lepton number, flavor, and magnetic moment) are all scalars.
+    For another, the number of times a particular short-lived watch ticked from its manufacture to its eventual failure; every one of these ticks happened, and it happened in all coordinate systems.
+    An extremely important example of a scalar is the inner product of a four-vector with itself or with another four-vector, which is explicit in \defref{def:lt}.
+\end{remark}
 
-\paragraph{Time dilation and length contraction}
+At this point we have defined all of the mathematical objects and concepts required to fully develop special relativity.
+The theory of special relativity will involve only these objects and a few additional common-sense postulates.
+
+\paragraph{Time dilation and length contraction}\label{sec:time}
 
 HOGG: Argue that elapsed time must be the (square root of) the interval.
 
@@ -183,9 +243,9 @@ HOGG: Note that this delivers a twin paradox.
 
 HOGG: Deliver the Lorentz transformation?
 
-\paragraph{Causality}
+\paragraph{Causality}\label{sec:causality}
 
-\paragraph{Energy and momentum}
+\paragraph{Energy and momentum}\label{sec:momentum}
 
 HOGG: Argue that the four-momentum is energy and three-momentum.
 

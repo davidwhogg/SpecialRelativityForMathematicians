@@ -57,7 +57,7 @@
 \newcommand{\s}{\unit{s}}
 
 \title{\bfseries Special relativity for mathematicians}
-\author{David W. Hogg \& Soledad Villar}
+\author{David W. Hogg \and Soledad Villar}
 \date{December 2024}
 
 \begin{document}
@@ -88,7 +88,7 @@ There is additionally a concept of a reference frame, and a relative velocity be
 
 \begin{definition}[speed of light]
     The speed of light in vacuum $c$ is $299\,792\,458\,\m\,\s^{-1}$.
-    In the units in which time and distance are both measured in meters, the speed of light in vacuum $c$ is 1.
+    When times and distances are both measured in the same units, the speed of light in vacuum $c$ is 1.
 \end{definition}
 \begin{remark}
     For reasons that will become clear below, the parameter $c$ should really be called ``the null speed'' not ``the speed of light,'' but we are sticking with standard usage here.
@@ -117,13 +117,13 @@ There is additionally a concept of a reference frame, and a relative velocity be
 
 \begin{definition}[four-vector]\label{def:fv}
     A four-vector is an element of $\mathbb{R}^{d+1}$ that contains a time coordinate followed by $d$ spatial coordinates.
-    All four elements of the four-vector must have the same units.
+    All $d+1$ coordinates of the four-vector must have the same units.
 \end{definition}
 \begin{remark}
     We will think of the four-vectors as being column vectors in what follows, so maybe they are really elements of $\mathbb{R}^{(d+1)\times 1}$.
     We will typeset four-vectors sans-serif with hats like $\fv{u}$, $\fv{p}$.
     The simplest four-vector is the \emph{four-displacement}, which is the separation between two events in $d+1$ spacetime, with all $d+1$ coordinates given in the same units.
-    The four-displacement has $d+1$ elements or coordinates because each event has a time coordinate and $d$ position coordinates.
+    The four-displacement has $d+1$ coordinates because each event has a time coordinate and $d$ position coordinates.
     The coordinates can be given in either time units (seconds, say) or length units (meters, say), using the speed of light $c$ as the conversion factor between length and time.
 \end{remark}
 
@@ -137,7 +137,7 @@ There is additionally a concept of a reference frame, and a relative velocity be
     Thus the four-vector $\fv{p}$ can be written as $(p_t, \tv{p})$, where the first element is the time component of $\fv{p}$ and the next $d$ components of $\fv{p}$ are given by the $d$ components of $\tv{p}$.
 \end{remark}
 
-\begin{definition}[inner products]
+\begin{definition}[inner products]\label{def:inner}
     Given two three-vectors $\tv{a}$ and $\tv{b}$, the inner product $\inner{\tv{a}}{\tv{b}}=\tv{a}\cdot\tv{b}$ is the usual Euclidean inner product.
     Given two four-vectors $\fv{a}=(a_t,\tv{a})$ and $\fv{b}=(b_t,\tv{b})$, the inner product is given by a difference
     \begin{align}
@@ -227,15 +227,39 @@ There is additionally a concept of a reference frame, and a relative velocity be
 \end{remark}
 
 At this point we have defined all of the mathematical objects and concepts required to fully develop special relativity.
-The theory of special relativity will involve only these objects and a few additional common-sense postulates.
+The theory of special relativity will involve only these objects and a few additional common-sense physical postulates.
+These postulates will connect the mathematical objects to physical observables and make the theory empirically testable.
+Indeed, special relativity is perhaps the most well tested of all physical theories, in that essentially every other precision test in physics depends on it to first order.
+
+In our ontology, we have not used the word ``group'' but there is a group in play:
+The Lorentz group O($1,d$) is the group of which the Lorentz transformations are the elements, and the inner products of the four-vectors are the invariants.
+In what follows, we will describe the important aspects of special relativity in terms of four-vectors and their invariant inner products.
 
 \paragraph{Time dilation and length contraction}\label{sec:time}
+Imagine two events $A$ and $B$, with time coordinates $t_A$ and $t_B$ ordered $t_A<t_B$.
+The four-displacement $\fv{s}_{BA}$ is defined to be the $d+1$ coordinates of event $B$ minus the $d+1$ coordinates of event $A$, all written in the same units (which could be either time units or length units, since these are equivalent under the conversion factor $c$).
+The inner product $\inner{\fv{s}_{BA}}{\fv{s}_{BA}}$ of the four-vector with itself is a scalar, which we can call $s^2_{BA}$; this squared quantity is conventionally called \emph{the interval} between $A$ and $B$.
+Let's assume that this interval is positive.
+As we will see below in \secref{sec:causality}, when the interval $s^2_{BA}$ is positive, there is a straight worldline that passes through both events.
 
-HOGG: Argue that elapsed time must be the (square root of) the interval.
+Now imagine that a stopwatch travels along this straight worldline.
+The stopwatch is started at event $A$ and stopped at event $B$.
+When it is stopped, it reads an elapsed time $\tau_{BA}$ between the two events.
+Everyone, no matter their state of rest or motion, and no matter their coordinate system, can see this stopwatch and will agree upon the reading $\tau_{BA}$ on the stopwatch.
+Since it is agreed upon by all, the elapsed time must be a scalar with units of time, and it must be a scalar that depends only on the worldline connecting events $A$ and $B$.
+Thus the time $\tau_{BA}$ must be equal to $\sqrt{s^2_{BA}}$:
+This is the only scalar with units of time (or, equivalently, length) that we can associate with the straight worldline connecting event $A$ to event $B$.
+
+Given \defref{def:inner} of inner products, if the two events are at different spatial locations, the elapsed time $\tau_{BA}$ is strictly less than the time difference $(t_B-t_A)$ between the events.
+This is \emph{time dilation}: Moving clocks tick slow.
+
+HOGG: Need to insert the definition of ``proper time'' into the above.
 
 HOGG: Note that this makes it such that a particle can move much farther than $c\,T$ in its lifetime $T$.
 
 HOGG: Note that this makes for length contraction?
+
+\paragraph{Paradoxes}\label{sec:paradoxes}
 
 HOGG: Prove that the constant-velocity trajectory worldline is the maximum-proper-time worldline.
 
